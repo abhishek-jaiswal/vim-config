@@ -5,6 +5,9 @@ filetype off                  " required
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
 
+" Rebind <Leader> key
+let mapleader = ","
+
 set clipboard=unnamed
 
 " settings for tabs
@@ -21,6 +24,17 @@ set softtabstop=4
 set shiftwidth=4
 set shiftround
 set expandtab
+" show a visual line under the cursor's current line
+set cursorline
+
+" show the matching part of the pair for [] {} and ()
+set showmatch
+
+" enable all Python syntax highlighting features
+let python_highlight_all = 1
+
+map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-C>
+
 
 
 "-----------------------------------------------------------------------------
@@ -81,6 +95,13 @@ let g:solarized_termcolors=256
 syntax enable
 set background=dark
 colorscheme solarized
+
+"NERDTRee settings
+autocmd vimenter * NERDTree
+let NERDTreeMapOpenInTab='<ENTER>'
+:let g:nerdtree_tabs_open_on_console_startup = 1
+
+
 
 
 
