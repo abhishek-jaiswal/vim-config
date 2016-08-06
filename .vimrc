@@ -16,6 +16,7 @@ set number  " show line numbers
 set tw=79   " width of document (used by gd)
 set nowrap  " don't automatically wrap on load
 set fo-=t   " don't automatically wrap text when typing
+set termencoding=utf-8
 set colorcolumn=80
 highlight ColorColumn ctermbg=233
 " Real programmers don't use TABs but spaces
@@ -60,8 +61,12 @@ Plugin 'tpope/vim-fugitive'
 
 Plugin 'altercation/vim-colors-solarized'
 
+Plugin 'powerline/fonts'
 "Powerline Plugin
-Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+
+"auto complete
+Plugin 'davidhalter/jedi-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -81,9 +86,23 @@ let g:ctrlp_prompt_mappings = {
 
 " Set the default opening command to use when pressing the above mapping:
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_max_height = 30
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*
 
+" PowerLine config
+" https://coderwall.com/p/yiot4q/setup-vim-powerline-and-iterm2-on-mac-os-x
 set laststatus=2
+set guifont=Inconsolata\ for\ Powerline:h15
+let g:Powerline_symbols='fancy'
+set encoding=utf-8
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
+set termencoding=utf-8
 
+set guifont=Menlo\ For\ Powerline
 "Tab settings 
 nmap <Left> gT
 nmap <Right> gt
