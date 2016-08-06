@@ -121,6 +121,18 @@ let NERDTreeMapOpenInTab='<ENTER>'
 :let g:nerdtree_tabs_open_on_console_startup = 1
 
 
-
+" jedi settings
+let g:jedi#use_splits_not_buffers = "left"
+set completeopt=longest,menuone
+function! OmniPopup(action)
+    if pumvisible()
+        if a:action == 'j'
+            return "\<C-N>"
+        elseif a:action == 'k'
+            return "\<C-P>"
+        endif
+    endif
+    return a:action
+ endfunction
 
 
