@@ -1,48 +1,46 @@
-" Some Basic Settings
+" vim Settings
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
-" syntax on
+syntax on
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
 
-" Rebind <Leader> key
-let mapleader = ","
-
 set clipboard=unnamed
-
-" Showing line numbers and length
-set number  " show line numbers
-set tw=79   " width of document (used by gd)
-set nowrap  " don't automatically wrap on load
-set fo-=t   " don't automatically wrap text when typing
-set termencoding=utf-8
-set colorcolumn=80
-highlight ColorColumn ctermbg=233
+set nu
 " Real programmers don't use TABs but spaces
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set shiftround
 set expandtab
-" show a visual line under the cursor's current line
-set cursorline
+set encoding=utf-8
+"set editing-mode vi
 
-" show the matching part of the pair for [] {} and ()
-set showmatch
+" Python Indentation
+au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4 
+    \ colorcolumn=80 
+    \ textwidth=79
+    \ expandtab
+    \ autoindent
+    \ fileformat=unix
 
-" enable all Python syntax highlighting features
-let python_highlight_all = 1
+" Use the below highlight group when displaying bad whitespace is desired.
+highlight BadWhitespace ctermbg=red guibg=red
+" This will mark extra whitespace as bad, and probably color it red.
+" Display tabs at the beginning of a line in Python mode as bad.
+au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
+" Make trailing whitespace be flagged as bad.
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-" copy paste to use system clipboard
-set clipboard+=unnamed  " use the clipboards of vim and win
-set paste               " Paste from a windows or from vim
-set go+=a               " Visual selection automatically copied to the clipboard
 
-filetype plugin indent on    " required
+au BufNewFile,BufRead *.js, *.html, *.css setlocal tabstop=2
+   \  softtabstop=2
+   \  shiftwidth=2
 
-map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-C>
 
+
+set backspace=indent,eol,start
 
 
 "-----------------------------------------------------------------------------
@@ -54,18 +52,37 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'altercation/vim-colors-solarized'
+
 " fuzzy file, buffer, mru, tag, ... finder for Vim.
 " Run :help ctrlp-mappings or submit ? in CtrlP for more mapping help
 Plugin 'ctrlpvim/ctrlp.vim'
 
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'Valloric/YouCompleteMe'
 
-Plugin 'scrooloose/nerdtree'
-
-Plugin 'jistr/vim-nerdtree-tabs'
-
+"python sytax checker
+Plugin 'nvie/vim-flake8'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'scrooloose/syntastic'
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+call vundle#end()
+"----------------------------------------------------------------------------
+
+let mapleader = ','
+
+" show a visual line under the cursor's current line
+set cursorline
+
+
+" show the matching part of the pair for [] {} and ()
+set showmatch
+
+" powerline plugin
+source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
+set laststatus=2
+
+" enable all Python syntax highlighting features
+let python_highlight_all = 1
 
 
 " Theme Settings
@@ -75,20 +92,14 @@ set background=dark
 colorscheme solarized
 
 
-"NERDTRee settings
-autocmd vimenter * NERDTree
-let NERDTreeMapOpenInTab='<ENTER>'
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
-let g:nerdtree_tabs_open_on_console_startup=1
-map  <C-l> :tabn<CR>
-map  <C-h> :tabp<CR>
-map  <C-n> :tabnew<CR>
-
 " ctrlp settings customization
 let g:ctrlp_map = '<c-p>'
-" re mapping keys to open always in new tab
-let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<c-t>'],
-    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
-    \ }
+
+
+" to run current buffer python code
+nnoremap <F9> :echo system('python2 "' . expand('%') . '"')<cr>
+nnoremap <F10> :echo system('python3 "' . expand('%') . '"')<cr>
+
+
+
 
