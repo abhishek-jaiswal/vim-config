@@ -60,6 +60,8 @@ Plugin 'ctrlpvim/ctrlp.vim'
 
 Plugin 'Valloric/YouCompleteMe'
 
+" vim git wrapper
+Plugin 'tpope/vim-fugitive'
 "python sytax checker
 Plugin 'nvie/vim-flake8'
 Plugin 'vim-scripts/indentpython.vim'
