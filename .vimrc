@@ -6,8 +6,38 @@ syntax on
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
 
-set clipboard=unnamed
-set nu
+let mapleader = ','
+
+"---------------------------------------------------------------------------
+" Vundle Plugin Manager
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'		        " let Vundle manage Vundle, required
+Plugin 'ctrlpvim/ctrlp.vim'		            " fuzzy search/workspace
+Plugin 'Valloric/YouCompleteMe'		        " code completion
+Plugin 'preservim/nerdtree'                 " Project and file navigation
+"----------------------------=== Others ===--------------------------------
+Plugin 'ryanoasis/vim-devicons'             " Dev Icons
+Plugin 'tpope/vim-fugitive'                 " vim git wrapper
+Plugin 'vim-airline/vim-airline'            " Lean & mean status/tabline for vim
+Plugin 'vim-airline/vim-airline-themes'     " Themes for airline
+
+
+"-------------------------=== Python  ===------------------------------------
+Plugin 'klen/python-mode'                   " Python mode (docs, refactor, lints...)
+Plugin 'nvie/vim-flake8'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'scrooloose/syntastic'
+" All of your Plugins must be added before the following line
+call vundle#end()
+"--------------------------------------------------------------------------
+
+filetype on
+filetype plugin on
+filetype plugin indent on
+
 " Real programmers don't use TABs but spaces
 set tabstop=4
 set softtabstop=4
@@ -15,93 +45,48 @@ set shiftwidth=4
 set shiftround
 set expandtab
 set encoding=utf-8
-"set editing-mode vi
-
-" Python Indentation
-au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4 
-    \ colorcolumn=80 
-    \ textwidth=79
-    \ expandtab
-    \ autoindent
-    \ fileformat=unix
-
-" Use the below highlight group when displaying bad whitespace is desired.
-highlight BadWhitespace ctermbg=red guibg=red
-" This will mark extra whitespace as bad, and probably color it red.
-" Display tabs at the beginning of a line in Python mode as bad.
-au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-" Make trailing whitespace be flagged as bad.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+set enc=utf-8	                            " utf-8 by default
+set smarttab                                " set tabs for a shifttabs logic
+set autoindent                              " indent when moving to the next line while writing code
+set shell=/bin/bash
+set number                                  " show line numbers
+set ruler
+set ttyfast                                 " terminal acceleration
 
 
-au BufNewFile,BufRead *.js, *.html, *.css setlocal tabstop=2
-   \  softtabstop=2
-   \  shiftwidth=2
+set cursorline                              " shows line under the cursor's line
+set showmatch                               " shows matching part of bracket pairs (), [], {}
+
+set go+=a               " Visual selection automatically copied to the clipboard
+
+set t_Co=256                                " 256 colors
+set guifont=mononoki\ Nerd\ Font\ 18
+colorscheme wombat256mod                    " set vim colorscheme
+let g:airline_theme='wombat'                " set airline theme
+syntax enable                               " enable syntax highlighting
+
+set pyxversion=0
+let g:loaded_python_provider = 1
 
 
+"=====================================================
+"" Search settings
+"=====================================================
+set incsearch	                            " incremental search
+set hlsearch	                            " highlight search results
 
-set backspace=indent,eol,start
-
-
-"-----------------------------------------------------------------------------
-" Vundle Plugin Manager
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'altercation/vim-colors-solarized'
-
-" fuzzy file, buffer, mru, tag, ... finder for Vim.
-" Run :help ctrlp-mappings or submit ? in CtrlP for more mapping help
-Plugin 'ctrlpvim/ctrlp.vim'
-
-Plugin 'Valloric/YouCompleteMe'
-
-" vim git wrapper
-Plugin 'tpope/vim-fugitive'
-"python sytax checker
-Plugin 'nvie/vim-flake8'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'scrooloose/syntastic'
-" All of your Plugins must be added before the following line
-call vundle#end()
-"----------------------------------------------------------------------------
-
-let mapleader = ','
-
-" show a visual line under the cursor's current line
-set cursorline
+"=====================================================
+"" Python Settings
+"=====================================================
+map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-C>
 
 
-" show the matching part of the pair for [] {} and ()
-set showmatch
+"=====================================================
+"" NerdTree Settings
+"=====================================================
+autocmd vimenter * NERDTree
 
-" powerline plugin
-source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
-set laststatus=2
-
-" enable all Python syntax highlighting features
-let python_highlight_all = 1
-
-
-" Theme Settings
-let g:solarized_termcolors=256
-syntax enable
-set background=dark
-colorscheme solarized
-
-
-" ctrlp settings customization
-let g:ctrlp_map = '<c-p>'
-
-
-" to run current buffer python code
-nnoremap <F9> :echo system('python2 "' . expand('%') . '"')<cr>
-nnoremap <F10> :echo system('python3 "' . expand('%') . '"')<cr>
-
-
-
-
+"=====================================================
+"" DevIcon Settings
+"=====================================================
+" loading the plugin
